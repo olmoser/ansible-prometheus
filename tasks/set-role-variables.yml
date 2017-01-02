@@ -9,6 +9,11 @@
   when: prometheus_use_service is not defined
 
 
+- name: set prometheus_use_systemd = False, if not defined
+  set_fact:
+    prometheus_use_systemd: False
+  when: prometheus_use_systemd is not defined
+
 
 - block:
 
