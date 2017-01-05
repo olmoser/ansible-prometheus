@@ -120,11 +120,21 @@
 
 - name: copy INIT script to server
   template: src="../templates/prometheus.sysvinit.{{ ansible_os_family|lower }}.sh.j2"  dest="/etc/init.d/prometheus"  mode="a+x"
-  when: prometheus_use_systemd is not defined
+  when: not prometheus_use_systemd|bool
 
-- name: copy systemd unit to server
-  template: src="../templates/prometheus.service.j2"  dest="/etc/systemd/system/prometheus.service" 
-  when: prometheus_use_systemd is defined
+- block:  
+    - name: copy systemd unit to server
+      template: src="../templates/prometheus.service.j2"  dest="/etc/systemd/system/prometheus.service" 
+
+    - name: create systemd config directory
+      file:
+        path: /etc/systemd/system/prometheus.service.d
+        state: directory 
+          
+    - name: copy systemd unit prometheus config 
+      template: src="../templates/prometheus.conf.j2"  dest="/etc/systemd/system/prometheus.service.d/prometheus.conf" 
+
+  when: prometheus_use_systemd
 
 - name: set INIT status
   service: name=prometheus enabled=yes

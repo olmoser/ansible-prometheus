@@ -16,7 +16,7 @@ ExecStart=/opt/prometheus/prometheus-1.4.1.linux-amd64/prometheus \
          -storage.local.path={{ prometheus_db_path }} \
          -web.console.templates={{ prometheus_daemon_dir }}/consoles \
          -web.console.libraries={{ prometheus_daemon_dir }}/console_libraries \
-         {{ prometheus_opts }}
+		 $DAEMON_OPTS
 
 [Install]
 WantedBy=multi-user.target
