@@ -10,12 +10,13 @@ ExecReload=/bin/kill -HUP $MAINPID
 
 ExecStart=/opt/prometheus/prometheus-1.4.1.linux-amd64/prometheus \
 {% if prometheus_alertmanager_url is defined %}
-		 -alertmanager.url={{ prometheus_alertmanager_url }}"
+		 -alertmanager.url={{ prometheus_alertmanager_url }}" \
 {% endif %}
          -config.file={{ prometheus_config_path }}/prometheus.yml \
          -storage.local.path={{ prometheus_db_path }} \
          -web.console.templates={{ prometheus_daemon_dir }}/consoles \
          -web.console.libraries={{ prometheus_daemon_dir }}/console_libraries \
+		 {{ prometheus_opts }} \
 		 $DAEMON_OPTS
 
 [Install]
