@@ -14,6 +14,10 @@
     prometheus_use_systemd: False
   when: prometheus_use_systemd is not defined
 
+- name: set prometheus_alertmanager_use_systemd = False, if not defined
+  set_fact:
+    prometheus_alertmanager_use_systemd: False
+  when: prometheus_alertmanager_use_systemd is not defined
 
 - block:
 
