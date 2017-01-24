@@ -1,3 +1,4 @@
+# vi: ft=systemd
 [Unit]
 Description=Prometheus Server
 Documentation=https://prometheus.io/docs/introduction/overview/
@@ -8,7 +9,7 @@ User={{ prometheus_user }}
 Restart=on-failure
 ExecReload=/bin/kill -HUP $MAINPID
 
-ExecStart=/opt/prometheus/prometheus-1.4.1.linux-amd64/prometheus \
+ExecStart={{ prometheus_daemon_dir }}/prometheus \
 {% if prometheus_alertmanager_url is defined %}
 		 -alertmanager.url={{ prometheus_alertmanager_url }}" \
 {% endif %}
