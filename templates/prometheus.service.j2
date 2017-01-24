@@ -11,7 +11,7 @@ ExecReload=/bin/kill -HUP $MAINPID
 
 ExecStart={{ prometheus_daemon_dir }}/prometheus \
 {% if prometheus_alertmanager_url is defined %}
-		 -alertmanager.url={{ prometheus_alertmanager_url }}" \
+		 -alertmanager.url={{ prometheus_alertmanager_url }} \
 {% endif %}
          -config.file={{ prometheus_config_path }}/prometheus.yml \
          -storage.local.path={{ prometheus_db_path }} \
